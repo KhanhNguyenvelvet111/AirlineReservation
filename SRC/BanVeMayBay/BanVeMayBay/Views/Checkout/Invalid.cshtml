@@ -1,0 +1,78 @@
+﻿
+@{
+    ViewBag.Title = "Invalid";
+    Layout = "~/Views/Shared/_layOutSite.cshtml";
+}
+
+
+
+@*<div class="container ">
+    <div class="row">
+        <div class="col-md-10">
+            <span style="font-weight:bold;color:red; font-size:22px;">
+                <i class="fas fa-fighter-jet">Please login to be able to buy tickets or pay </i>
+            </span>
+        </div>
+    </div>
+</div>*@
+
+<section class="login-block">
+    <form action="Login" method="post">
+        <div class="container">
+            @Html.Partial("_MessgeAlert")
+            <div class="row">
+                <div class="col-md-4 login-sec">
+                    @*<span style="font-weight:bold;color:darkred; font-size:10px;">
+                        Please login to be able to buy tickets or pay 
+                    </span>*@
+                    <h2 class="text-center">Login Now</h2>
+                    <h4 style="color:darkred">Please login to be able to buy tickets or pay </h4>
+                    <form   class="login-form">
+                        <div class="form-group">
+                            <label for="exampleInputEmail1" class="text-uppercase">Username</label>
+                            <input type="text" class="form-control" name="username">
+
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1" class="text-uppercase">Password</label>
+                            <input type="password" class="form-control" name="password">
+                        </div>
+                        <span class="text-danger">@ViewBag.error</span>
+
+                        <div class="form-check">
+                            <label class="form-check-label">
+                                <input type="checkbox" class="form-check-input">
+                                <small>Remember Me</small>
+                            </label>
+                            <div>
+                                <button type="submit" class="btn-blue btn-red btn-style-1 pt-2">Submit</button>
+                            </div>
+                        </div>
+
+                    </form>
+
+                </div>
+                <div class="col-md-8 banner-sec">
+                    
+                        
+                        <div>
+                            <div>
+                                <img class="d-block img-fluid" src="https://airlines.iata.org/sites/default/files/event_images/web_schiphol-airport-exterior_credit__iStock-458937467_0.png" width="650" height="400">
+
+                                @*<img typeof="foaf:Image" class="img-responsive" src="https://airlines.iata.org/sites/default/files/event_images/web_schiphol-airport-exterior_credit__iStock-458937467_0.png" width="650" height="400" alt="">*@
+                                <div>
+                                    <div class="banner-text">
+                                        <h2>IATA is successful in Dutch slot rule case</h2>
+                                        <p>IATA has succeeded in legal action in the Netherlands to prevent the application of a new Policy Rule for slot allocation.</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    
+                </div>
+            </div>
+    </form>
+
+</section>

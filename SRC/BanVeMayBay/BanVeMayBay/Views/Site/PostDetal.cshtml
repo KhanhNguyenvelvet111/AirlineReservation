@@ -1,0 +1,64 @@
+﻿@model BanVeMayBay.Models.post
+@{
+    ViewBag.Title = "postOftoPic";
+    Layout = "~/Views/Shared/_layOutSite.cshtml";
+}
+<!-- Breadcrumb -->
+<!-- BreadCrumb Ends -->
+<!-- Destinations -->
+<section class="destinations">
+    <div class="container " style="padding:20px;">
+        <div class="row">
+            <nav aria-label="breadcrumb">
+                <ul class="breadcrumb bg-white">
+                    <li class="breadcrumb-item"><a href="~/">HomePage</a></li>
+                    <li class="breadcrumb-item"><a href="~/tin-tuc">News</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">@ViewBag.Bra</li>
+                </ul>
+            </nav>
+            <div class="col-md-8 bg-white">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="destination-outer">
+                            <p style="font-weight:bold;font-size:25px;color:#ff6a00;">@Html.Raw(Model.title)</p> <br />
+                            <p>@Html.Raw(Model.detail)</p>
+                        </div>
+                    </div>
+                </div>
+          
+            </div>
+            <div id="sidebar-sticky" class="col-md-4">
+                <aside class="detail-sidebar sidebar-wrapper">
+                    <div class="sidebar-item sidebar-item-dark">
+                        <div class="detail-title">
+                            <h3>Search</h3>
+                        </div>
+                        <form action="~/tim-kiem-bai-viet" method="get">
+                            <div class="row">
+                                <div class="form-group col-xs-12">
+                                    <input type="text" class="form-control" name="keyw" placeholder="What do you want to search...">
+                                </div>
+                                <div class="col-xs-12">
+                                    <div class="comment-btn">
+                                        <button class="btn-blue ">Search</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="sidebar-item">
+                        <div class="detail-title">
+                            <h3>News category</h3>
+                        </div>
+                        <ul class="event-list">
+                            @Html.Action("topic", "Site")
+
+                        </ul>
+                    </div>
+                </aside>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Destination Ends -->

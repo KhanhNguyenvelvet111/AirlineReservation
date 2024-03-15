@@ -1,0 +1,74 @@
+﻿@model BanVeMayBay.Models.city
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Areas/Admin/Views/Shared/_layOutAdmin.cshtml";
+}
+
+
+<div class="card card-title bg-white p-1">
+    <div class="row">
+        <div class="col-md-6 "> <h5 class="pl-2 mt-2 text-blues">Add Airport </h5> </div>
+        <div class="col-md-6 m-0">
+            <ol class="breadcrumb bg-white float-sm-right m-0">
+                <li class="breadcrumb-item"><a href="/Admin">Home</a></li>
+                <li class="breadcrumb-item active">Add Airport</li>
+            </ol>
+        </div>
+    </div>
+</div>
+
+<section class="card card-title bg-white p-1">
+    @Html.Partial("_MessgeAlert")
+    <div class="container bg-white pt-4 "  style="margin-bottom:50px">
+
+        @using (Html.BeginForm("CreateCities", "Airport", FormMethod.Post ))
+        {
+            @Html.AntiForgeryToken()
+            <div class=" row ">
+                <div class="col-md-4">  </div>
+                <div class="col-md-4"> <h3 class="text-center font-weight-bold text-success "> Add Tickets</h3> </div>
+                <div class="col-md-4 ">
+                    <div class="float-right">
+                        <button class="btn btn-sm bg-success text-white"><i class="far fa-save"></i> Save</button>
+                        <a href="~/admin/Airport" class="btn btn-sm bg-danger text-white"><i class="far fa-window-close"></i> Cancel</a>
+                    </div>
+                </div>
+            </div>
+            <div class=" row ">
+               
+                <div class="col-md-10 ">
+
+
+                    <div>
+                        <label for="psw"><span class="text-secondary font-weight-bold">Country</span></label>
+                        <select name="countryId" class="selectpicker form-control" tabindex="1">
+
+                            @foreach (var item in ViewBag.countries)
+                            {
+                                <option value="@item.countryId">@item.countryName</option>
+                            }
+
+                        </select>
+                    </div>
+                    <div>
+                        <label for="psw"><span class="text-secondary font-weight-bold">City Name</span></label>
+                        <input type="text" name="cityName" class="form-control" value="" placeholder="CityName" required />
+
+                    </div>
+
+                    <div>
+                        <label for="psw"><span class="text-secondary font-weight-bold">Status</span></label>
+                        <select name="status" class="selectpicker form-control" tabindex="1">
+                            <option value="1">Display</option>
+                            <option value="2">Hidden</option>
+                        </select>
+                    </div>
+                </div>
+
+                </div>
+
+           
+        }
+    </div>
+</section>

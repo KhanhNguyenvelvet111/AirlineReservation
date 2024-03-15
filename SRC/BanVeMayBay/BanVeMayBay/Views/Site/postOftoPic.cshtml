@@ -1,0 +1,137 @@
+﻿@using PagedList.Mvc;
+@model PagedList.IPagedList<BanVeMayBay.Models.post>
+@{
+    ViewBag.Title = "postOftoPic";
+    Layout = "~/Views/Shared/_layOutSite.cshtml";
+}
+<!-- Breadcrumb -->
+<!-- BreadCrumb Ends -->
+<!-- Destinations -->
+<section class="destinations">
+    <div class="container " style="padding:20px;">
+        <div class="row">
+            <nav aria-label="breadcrumb">
+                <ul class="breadcrumb bg-white">
+                    <li class="breadcrumb-item"><a href="~/">HomePage</a></li>
+                    <li class="breadcrumb-item"><a href="">News</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">@ViewBag.nameTopic</li>
+                </ul>
+            </nav>
+            <div class="col-md-8 bg-white">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="destination-outer">
+                            @foreach (var item in Model)
+                            {
+                                <div class="destination-fw-item " style="padding-top:10px;">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="destination-fw-image">
+                                                <img style="width:200px;height:150px;" src="~/public/images/post/@item.img" alt="Image">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <div class="destination-fw-desc fw-content">
+                                                <h3><a href="~/chi-tiet-bai-viet/@item.slug">@item.title</a></h3>
+                                                <div class="package-content">
+                                                    <span>@item.created_at</span><br>
+                                                                                 <p>@item.title</p>
+                                                  <a href="~/chi-tiet-bai-viet/@item.slug">Read More</a>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            }
+
+
+                        </div>
+                    </div>
+                </div>
+                <div class="pagination-content text-center">
+                    <ul class="pagination">
+
+
+                        <li>
+                            <a href="~/@ViewBag.url?page=1" class="single-btn prev-btn ">
+                                <i class="fa fa-angle-double-left" aria-hidden="true"></i>
+                            </a>
+                        </li>
+                        <li>
+                            @{
+                                var firstPage = 1;
+                                if ((int)Model.PageNumber > 1)
+                                {
+                                    firstPage = (int)Model.PageNumber - 1;
+                                }
+
+                                var lastpage = Model.PageNumber;
+                                if (lastpage < Model.PageCount)
+                                {
+                                    lastpage = (int)Model.PageNumber + 1;
+                                }
+
+                            }
+                            <a href="~/@ViewBag.url?page=@firstPage" class="single-btn prev-btn ">
+                                <i class="fa fa-angle-left" aria-hidden="true"></i>
+                            </a>
+                        </li>
+
+                        @for (int i = Model.PageNumber; i <= Model.PageCount; i++)
+                        {
+
+                            if (i < Model.PageNumber + 5)
+                            {
+                                <li id="active_@i"><a href="~/@ViewBag.url?page=@i" class="single-btn">@i  </a></li>
+                            }
+
+                        }
+                        <li>
+                            <a href="~/@ViewBag.url?page=@lastpage" class="single-btn next-btn">
+                                <i class="fa fa-angle-right" aria-hidden="true"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="~/@ViewBag.url?page=@Model.PageCount" class="single-btn next-btn">
+                                <i class="fa fa-angle-double-right" aria-hidden="true"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div id="sidebar-sticky" class="col-md-4">
+                <aside class="detail-sidebar sidebar-wrapper">
+                    <div class="sidebar-item sidebar-item-dark">
+                        <div class="detail-title">
+                            <h3>Search</h3>
+                        </div>
+                        <form action="~/tim-kiem-bai-viet" method="get">
+                            <div class="row">
+                                <div class="form-group col-xs-12">
+                                    <input type="text" class="form-control" name="keyw" placeholder="What do you want to search...">
+                                </div>
+                                <div class="col-xs-12">
+                                    <div class="comment-btn">
+                                        <button  class="btn-blue ">Search</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="sidebar-item">
+                        <div class="detail-title">
+                            <h3>News category</h3>
+                        </div>
+                        <ul class="event-list">
+                          @Html.Action("topic","Site")
+
+                        </ul>
+                    </div>
+                </aside>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Destination Ends -->
