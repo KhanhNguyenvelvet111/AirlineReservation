@@ -4,12 +4,22 @@ using System;
 using System.Linq;
 using System.Web.Mvc;
 using System.Data.Entity;
+using BanVeMayBay.DesignPattern.TemplateMethod;
+using System.Diagnostics;
 
 namespace BanVeMayBay.Controllers
 {
-    public class CustomerController : Controller
+    public class CustomerController : TemplateMethodController
     {
         private BANVEMAYBAYEntities db = new BANVEMAYBAYEntities();
+
+        public CustomerController()
+        {
+            var result = PrintInfo();
+            Debugger.Log(1, "Logger: ", $"{result}");
+        }
+
+
         // GET: Customer
         public ActionResult Login()
         {
@@ -208,6 +218,18 @@ namespace BanVeMayBay.Controllers
             db.SaveChanges();
             Message.set_flash("Canceled 1 order", "success");
             return Redirect("~/tai-khoan");
+        }
+
+        public override string PrintRoutes()
+        {
+            return "========================" +
+                "Customer Controller is running!" +
+                "======================";
+        }
+
+        public override string PrintDIs()
+        {
+            return "=================No Dependence Injection================\n";
         }
     }
 }

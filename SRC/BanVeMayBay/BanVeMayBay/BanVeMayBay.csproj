@@ -413,6 +413,11 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ModulesController.cs" />
     <Compile Include="Controllers\SiteController.cs" />
+    <Compile Include="DesignPattern\Prototype\IPrototype.cs" />
+    <Compile Include="DesignPattern\Repository\BaseRepository.cs" />
+    <Compile Include="DesignPattern\Repository\IBaseRepository.cs" />
+    <Compile Include="DesignPattern\Singleton\TopicSingleton.cs" />
+    <Compile Include="DesignPattern\TemplateMethod\TemplateMethodController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

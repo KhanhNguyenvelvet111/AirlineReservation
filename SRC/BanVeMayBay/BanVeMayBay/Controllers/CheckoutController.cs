@@ -1,17 +1,28 @@
 ﻿using BanVeMayBay.Common;
+using BanVeMayBay.DesignPattern.TemplateMethod;
 using BanVeMayBay.Models;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Diagnostics;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
 namespace BanVeMayBay.Controllers
 {
-    public class CheckoutController : Controller
+    public class CheckoutController : TemplateMethodController
     {
         BANVEMAYBAYEntities db = new BANVEMAYBAYEntities();
+
+        public CheckoutController()
+        {
+            var result = PrintInfo();
+            Debugger.Log(1, "Logger: ", $"{result}");
+        }
+
+
+
         public ActionResult Invalid()
         {
             return View("Invalid");
@@ -157,6 +168,18 @@ namespace BanVeMayBay.Controllers
 
             return View("_BookingConnfig", list1.ToList());
         }
-        
+
+
+        public override string PrintRoutes()
+        {
+            return "========================" +
+                "Checkout Controller is running!" +
+                "======================";
+        }
+
+        public override string PrintDIs()
+        {
+            return "=================No Dependence Injection================\n";
+        }
     }
 }

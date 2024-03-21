@@ -9,10 +9,11 @@
 
 namespace BanVeMayBay.Models
 {
+    using BanVeMayBay.DesignPattern.Prototype;
     using System;
     using System.Collections.Generic;
     
-    public partial class post
+    public partial class post : IPrototype
     {
         public int ID { get; set; }
         public Nullable<int> topid { get; set; }
@@ -28,5 +29,25 @@ namespace BanVeMayBay.Models
         public int status { get; set; }
     
         public virtual topic topic { get; set; }
+
+        public IPrototype Clone()
+        {
+            post newPost = new post();
+            newPost.ID = ID;
+            newPost.topid = topid;
+
+            newPost.title = title + " (copied)";
+            newPost.slug = slug;
+            newPost.detail = detail;
+            newPost.created_at = DateTime.Now;
+            newPost.updated_at = DateTime.Now;
+            newPost.img = img;
+            newPost.type = type;
+            newPost.created_by = created_by;
+            newPost.updated_by = updated_by;
+            newPost.status = status;
+
+            return newPost;
+        }
     }
 }

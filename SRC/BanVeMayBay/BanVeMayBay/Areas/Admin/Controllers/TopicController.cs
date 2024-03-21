@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using BanVeMayBay.Common;
+using BanVeMayBay.DesignPattern.Singleton;
 using BanVeMayBay.Models;
 
 namespace BanVeMayBay.Areas.Admin.Controllers
@@ -15,11 +16,17 @@ namespace BanVeMayBay.Areas.Admin.Controllers
     {
         private BANVEMAYBAYEntities db = new BANVEMAYBAYEntities();
 
+
+        public TopicController()
+        {
+            TopicSingleton.Instance.Init(db);
+        }
+
         // GET: Admin/Topic
         public ActionResult Index()
         {
             
-            var list = db.topics.Where(m => m.status !=0).OrderByDescending(m => m.ID).ToList();
+            var list = TopicSingleton.Instance.listTopic.Where(m => m.status !=0).OrderByDescending(m => m.ID).ToList();
             return View(list);
         }
 
@@ -30,7 +37,7 @@ namespace BanVeMayBay.Areas.Admin.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            topic mtopic = db.topics.Find(id);
+            topic mtopic = TopicSingleton.Instance.listTopic.Find(tp => tp.ID == id);
             if (mtopic == null)
             {
                 return HttpNotFound();
@@ -41,7 +48,7 @@ namespace BanVeMayBay.Areas.Admin.Controllers
         // GET: Admin/Topic/Create
         public ActionResult Create()
         {
-            ViewBag.listtopic = db.topics.Where(m => m.status != 0).ToList();
+            ViewBag.listtopic = TopicSingleton.Instance.listTopic.Where(m => m.status != 0).ToList();
             return View();
         }
 
@@ -63,6 +70,7 @@ namespace BanVeMayBay.Areas.Admin.Controllers
                 mtopic.updated_by = int.Parse(Session["Admin_id"].ToString());
                 db.topics.Add(mtopic);
                 db.SaveChanges();
+                TopicSingleton.Instance.UpdateSingleton(db);
                 Message.set_flash("More success", "success");
                 return RedirectToAction("Index");
             }
@@ -78,12 +86,13 @@ namespace BanVeMayBay.Areas.Admin.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            topic mtopic = db.topics.Find(id);
+
+            topic mtopic = TopicSingleton.Instance.listTopic.Find(tp => tp.ID == id);
             if (mtopic == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.listtopic = db.topics.Where(m => m.status != 0).ToList();
+            ViewBag.listtopic = TopicSingleton.Instance.listTopic.Where(m => m.status != 0).ToList();
             return View(mtopic);
         }
 
@@ -100,10 +109,13 @@ namespace BanVeMayBay.Areas.Admin.Controllers
                 mtopic.updated_by = int.Parse(Session["Admin_id"].ToString());
                 db.Entry(mtopic).State = EntityState.Modified;
                 db.SaveChanges();
+                TopicSingleton.Instance.UpdateSingleton(db);
                 return RedirectToAction("Index");
             }
-            ViewBag.listtopic = db.topics.Where(m => m.status != 0).ToList();
+
+            ViewBag.listtopic = TopicSingleton.Instance.listTopic.Where(m => m.status != 0).ToList();
             return View(mtopic);
+
         }
 
         public ActionResult Status(int id)
@@ -114,43 +126,47 @@ namespace BanVeMayBay.Areas.Admin.Controllers
             mtopic.updated_by = int.Parse(Session["Admin_id"].ToString());
             db.Entry(mtopic).State = EntityState.Modified;
             db.SaveChanges();
+            TopicSingleton.Instance.UpdateSingleton(db);
             Message.set_flash("Status change successful", "success");
             return RedirectToAction("Index");
         }
         //trash
         public ActionResult trash()
         {
-            var list = db.topics.Where(m => m.status == 0).ToList();
+            var list = TopicSingleton.Instance.listTopic.Where(m => m.status == 0).ToList();
             return View("Trash", list);
         }
         public ActionResult Deltrash(int id)
         {
-            topic mtopic = db.topics.Find(id);
+            topic mtopic = TopicSingleton.Instance.listTopic.Find(tp => tp.ID == id);
             mtopic.status = 0;
             mtopic.updated_at = DateTime.Now;
             mtopic.updated_by = int.Parse(Session["Admin_id"].ToString());
             db.Entry(mtopic).State = EntityState.Modified;
             db.SaveChanges();
+            TopicSingleton.Instance.UpdateSingleton(db);
             Message.set_flash("Delete successfully", "success");
             return RedirectToAction("Index");
         }
 
         public ActionResult Retrash(int id)
         {
-            topic mtopic = db.topics.Find(id);
+            topic mtopic = TopicSingleton.Instance.listTopic.Find(tp => tp.ID == id);
             mtopic.status = 2;
             mtopic.updated_at = DateTime.Now;
             mtopic.updated_by = int.Parse(Session["Admin_id"].ToString());
             db.Entry(mtopic).State = EntityState.Modified;
             db.SaveChanges();
+            TopicSingleton.Instance.UpdateSingleton(db);
             Message.set_flash("Restore Success", "success");
             return RedirectToAction("trash");
         }
         public ActionResult deleteTrash(int id)
         {
-            topic mtopic = db.topics.Find(id);
+            topic mtopic = TopicSingleton.Instance.listTopic.Find(tp => tp.ID == id);
             db.topics.Remove(mtopic);
             db.SaveChanges();
+            TopicSingleton.Instance.UpdateSingleton(db);
             Message.set_flash("1 Thread has been permanently deleted", "success");
             return RedirectToAction("trash");
         }

@@ -155,6 +155,32 @@ namespace BanVeMayBay.Areas.Admin.Controllers
             }
             return View(mpost);
         }
+
+        //DS Prototype
+        public ActionResult Duplicate(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            //trans = db.PhuongTiens.Where(s => s.MaPTien == id).FirstOrDefault();
+            post mpost = db.posts.Find(id);
+            post newPost = (post)mpost.Clone(); //Clone về thuộc tính của post
+
+
+            db.posts.Add(newPost);
+            db.SaveChanges();
+
+            if (mpost == null)
+            {
+                return HttpNotFound();
+            }
+            return RedirectToAction("Index");
+        }
+
+
+
         public ActionResult Status(int id)
         {
             post mpost = db.posts.Find(id);

@@ -1,16 +1,26 @@
-﻿using BanVeMayBay.Models;
+﻿using BanVeMayBay.DesignPattern.TemplateMethod;
+using BanVeMayBay.Models;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
 namespace BanVeMayBay.Controllers
 {
-    public class ModulesController : Controller
+    public class ModulesController : TemplateMethodController
     {
         // GET: Modules
         BANVEMAYBAYEntities db = new BANVEMAYBAYEntities();
+
+        public ModulesController()
+        {
+            var result = PrintInfo();
+            Debugger.Log(1, "Logger: ", $"{result}");
+        }
+
+
         public ActionResult _Header()
         {
             if ((string)Session["userName11"] != "")
@@ -41,6 +51,18 @@ namespace BanVeMayBay.Controllers
         public ActionResult LogoSlide()
         {
             return View("LogoSlide");
+        }
+
+        public override string PrintRoutes()
+        {
+            return "========================" +
+                "Module Controller is running!" +
+                "======================";
+        }
+
+        public override string PrintDIs()
+        {
+            return "=================No Dependence Injection================\n";
         }
     }
 }

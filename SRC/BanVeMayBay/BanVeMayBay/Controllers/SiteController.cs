@@ -1,8 +1,10 @@
 ﻿using BanVeMayBay.Common;
+using BanVeMayBay.DesignPattern.TemplateMethod;
 using BanVeMayBay.Models;
 using PagedList;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using System.Web;
@@ -10,13 +12,21 @@ using System.Web.Mvc;
 
 namespace BanVeMayBay.Controllers
 {
-    public class SiteController : Controller
+    public class SiteController : TemplateMethodController
     {
         BANVEMAYBAYEntities db = new BANVEMAYBAYEntities();
+
+        public SiteController()
+        {
+            var result = PrintInfo();
+            Debugger.Log(1, "Logger: ", $"{result}");
+        }
+
         public ActionResult Index()
         {
             return View();
         }
+         
         [HttpPost]        
         public ActionResult flightSearch(FormCollection fc, int? page)
         {
@@ -39,9 +49,11 @@ namespace BanVeMayBay.Controllers
             string ngaybay = fc["departure_date"];
            
             ViewBag.url = "chuyen-bay";
+
             //convert sang mm/dd/yy cho may hieu 
             DateTime ngaybay1 = DateTime.ParseExact(ngaybay, "dd/MM/yyyy", CultureInfo.InvariantCulture);
-                //sang mm/dd/yy
+
+            //sang mm/dd/yy
             string ngaybay2 = ngaybay1.ToString("MM-dd-yyyy");
             DateTime ngaybay3 = DateTime.Parse(ngaybay2);
             ViewBag.noiBay = noiBay;
@@ -149,5 +161,18 @@ namespace BanVeMayBay.Controllers
             return View("PostDetal", single);
         }
 
+
+
+        public override string PrintRoutes()
+        {
+            return "========================" +
+                "Site Controller is running!" +
+                "======================";
+        }
+
+        public override string PrintDIs()
+        {
+            return "=================No Dependence Injection================\n";
+        }
     }
 }

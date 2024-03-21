@@ -67,7 +67,9 @@
                                     <td width="15%" class="pt-4 ">  @Html.DisplayFor(modelItem => item.topid)</td>
                                     <td style="font-size:15px;">@Html.DisplayFor(modelItem => item.created_at)</td>
                                     <td>
-                                        <a class="btn btn-sm btn-light text-dark border" href="@Url.Action("Retrash", "post", new { id = item.ID })"> <i class="fas fa-undo"></i></a>
+                                        <a class="btn btn-sm btn-light text-dark border" href="@Url.Action("Retrash", "post", new { id = item.ID })">
+                                            <i class="fas fa-undo"></i>
+                                        </a>
                                         <a class="btn btn-sm btn-light text-danger border" href="@Url.Action("deleteTrash", "post", new { id = item.ID })">
                                             <i class="fas fa-trash-alt"></i>
                                         </a>
